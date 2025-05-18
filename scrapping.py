@@ -42,10 +42,8 @@ def show_leaderboard(leaderboard):
         imagens_prontas = []
 
         y = 10
-        try:
-            fonte = ImageFont.truetype(fonte_arial , 35)
-        except:
-            fonte = ImageFont.load_default()
+        
+        fonte_arial = "fonts/arialbd.ttf"
 
         ouro   = (212, 175, 55)
         prata  = (169, 169, 169)
@@ -153,10 +151,8 @@ def show_leaderboard(leaderboard):
         imagens_prontas = []
 
         y = 10
-        try:
-            fonte = ImageFont.truetype("arialbd.ttf", 35)
-        except:
-            fonte = ImageFont.load_default()
+        
+        fonte_arial = "fonts/arialbd.ttf"
 
         ouro   = (212, 175, 55)
         prata  = (169, 169, 169)
