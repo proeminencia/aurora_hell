@@ -68,7 +68,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (900, y)
                 y += 40
-                desenhando.text(posicao, texto, font=fonte, fill=cor)
+                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
             y = 35
             for b in range (inicio, fim):
                 texto = str(nome[b])
@@ -82,7 +82,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (1000, y)
                 y += 40
-                desenhando.text(posicao, texto, font=fonte, fill=cor)
+                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
             y = 35
             for c in range (inicio, fim): #level
                 texto = str(level[c])
@@ -96,7 +96,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (1400, y)  # x, y
                 y += 40
-                desenhando.text(posicao, texto, font=fonte, fill=cor)
+                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
             y = 35
             for d in range (inicio, fim): #level
                 texto = str(exp[d])
@@ -110,7 +110,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (1600, y)  # x, y
                 y += 40
-                desenhando.text(posicao, texto, font=fonte, fill=cor)
+                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
             desenhando.text((35, 50), "Experience Leaderboard", font=ImageFont.truetype(fonte_arial, 70), fill=branco)
             desenhando.text((35, 1000), f"Generated at {agora}", font=ImageFont.truetype(fonte_arial, 35), fill=branco)
             inicio += 25
@@ -179,7 +179,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (900, y)
                 y += 40
-                desenhando.text(posicao, texto, font=fonte, fill=cor)
+                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
             y = 35
             for b in range (inicio, fim):
                 texto = str(nome[b])
@@ -193,7 +193,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (1200, y)
                 y += 40
-                desenhando.text(posicao, texto, font=fonte, fill=cor)
+                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
             y = 35
             for c in range (inicio, fim): #level
                 texto = str(stat[c])
@@ -207,7 +207,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (1800, y)  # x, y
                 y += 40
-                desenhando.text(posicao, texto, font=fonte, fill=cor)
+                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
             desenhando.text((35, 50), f"{rank_names[leaderboard]} Leaderboard", font=ImageFont.truetype(fonte_arial, 70), fill=branco)
             desenhando.text((35, 1000), f"Generated at {agora}", font=ImageFont.truetype(fonte_arial, 35), fill=branco)
             inicio += 25
@@ -217,32 +217,3 @@ def show_leaderboard(leaderboard):
             buffer.seek(0)
             imagens_prontas.append(buffer)
         return imagens_prontas
-
-# def top_farmers_ptrainers():
-#     from bs4 import BeautifulSoup
-#     import requests
-#     from PIL import Image, ImageDraw, ImageFont
-#     from io import BytesIO
-#     from datetime import datetime
-#     pagina = requests.get(f'https://www.rucoystats.com/leaderboards/experience')
-#     dados_pagina = BeautifulSoup(pagina.text, 'html.parser')
-#     nome = []
-#     level = []
-#     gain_exp = []
-#     gain_lv = []
-#     agora = datetime.now().replace(microsecond=0)
-#     # Encontra todas as tabelas com a classe específica
-#     ranks_exp = dados_pagina.find_all('table', class_='table table-striped table-highscores table-bordered')
-
-#     # Itera nas tabelas encontradas
-#     for div in ranks_exp:
-#         linhas = div.find_all('tr')[1:]  # Ignora o cabeçalho
-#         for tag in div.find_all('span', class_='label flat label-success'):
-#             tag.decompose()
-#         for linha in linhas:
-#             colunas = linha.find_all('td')
-#             if len(colunas) >= 3:
-#                 rank.append(colunas[0].get_text(strip=True))
-#                 nome.append(colunas[1].get_text(strip=True))
-#                 level.append(colunas[2].get_text(strip=True))
-#                 exp.append(colunas[3].get_text(strip=True))
