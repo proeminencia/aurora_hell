@@ -43,7 +43,7 @@ def show_leaderboard(leaderboard):
 
         y = 10
         
-        fonte_arial = "fonts/arialbd.ttf"
+        fonte = ImageFont.truetype(fonte_arial , 35)
 
         ouro   = (212, 175, 55)
         prata  = (169, 169, 169)
@@ -68,7 +68,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (900, y)
                 y += 40
-                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
+                desenhando.text(posicao, texto, font=fonte, fill=cor)
             y = 35
             for b in range (inicio, fim):
                 texto = str(nome[b])
@@ -82,7 +82,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (1000, y)
                 y += 40
-                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
+                desenhando.text(posicao, texto, font=fonte, fill=cor)
             y = 35
             for c in range (inicio, fim): #level
                 texto = str(level[c])
@@ -96,7 +96,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (1400, y)  # x, y
                 y += 40
-                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
+                desenhando.text(posicao, texto, font=fonte, fill=cor)
             y = 35
             for d in range (inicio, fim): #level
                 texto = str(exp[d])
@@ -110,7 +110,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (1600, y)  # x, y
                 y += 40
-                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
+                desenhando.text(posicao, texto, font=fonte, fill=cor)
             desenhando.text((35, 50), "Experience Leaderboard", font=ImageFont.truetype(fonte_arial, 70), fill=branco)
             desenhando.text((35, 1000), f"Generated at {agora}", font=ImageFont.truetype(fonte_arial, 35), fill=branco)
             inicio += 25
@@ -152,7 +152,7 @@ def show_leaderboard(leaderboard):
 
         y = 10
         
-        fonte_arial = "fonts/arialbd.ttf"
+        fonte = ImageFont.truetype(fonte_arial , 35)
 
         ouro   = (212, 175, 55)
         prata  = (169, 169, 169)
@@ -179,7 +179,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (900, y)
                 y += 40
-                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
+                desenhando.text(posicao, texto, font=fonte, fill=cor)
             y = 35
             for b in range (inicio, fim):
                 texto = str(nome[b])
@@ -193,7 +193,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (1200, y)
                 y += 40
-                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
+                desenhando.text(posicao, texto, font=fonte, fill=cor)
             y = 35
             for c in range (inicio, fim): #level
                 texto = str(stat[c])
@@ -207,7 +207,7 @@ def show_leaderboard(leaderboard):
                     cor = branco
                 posicao = (1800, y)  # x, y
                 y += 40
-                desenhando.text(posicao, texto, font=fonte_arial, fill=cor)
+                desenhando.text(posicao, texto, font=fonte, fill=cor)
             desenhando.text((35, 50), f"{rank_names[leaderboard]} Leaderboard", font=ImageFont.truetype(fonte_arial, 70), fill=branco)
             desenhando.text((35, 1000), f"Generated at {agora}", font=ImageFont.truetype(fonte_arial, 35), fill=branco)
             inicio += 25
