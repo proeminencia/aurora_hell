@@ -36,4 +36,4 @@ async def rank_level(interact:discord.Interaction, leaderboard: app_commands.Cho
 
 
 
-bot.run("MTM3MjU3NzI0Njc0NDk0MDY3NQ.GskMhS.xwmWUo7Jawhwi_tNU3U5iGM9GxNVIGp0myWO50")
+bot.run("your_token")
