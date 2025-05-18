@@ -6,7 +6,7 @@ def show_leaderboard(leaderboard):
     from datetime import datetime
 
     rank_names = ['Experience', 'Melee', 'Distance', 'Magic', 'Defense']
-    background_paths = [r'backgrounds\exp_lb_background.png', r'backgrounds\melee_lb_background.png', r'backgrounds\dist_lb_background.png', r'backgrounds\mage_lb_background.png', r'backgrounds\def_lb_background.png']
+    background_paths = [r'backgrounds/exp_lb_background.png', r'backgrounds/melee_lb_background.png', r'backgrounds/dist_lb_background.png', r'backgrounds/mage_lb_background.png', r'backgrounds/def_lb_background.png']
     fonte_arial = "fonts/arialbd.ttf"
 
     if leaderboard == 0:
