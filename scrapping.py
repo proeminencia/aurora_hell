@@ -6,8 +6,26 @@ def show_leaderboard(leaderboard):
     from datetime import datetime
 
     rank_names = ['Experience', 'Melee', 'Distance', 'Magic', 'Defense']
-    background_paths = [r'backgrounds/exp_lb_background.png', r'backgrounds/melee_lb_background.png', r'backgrounds/dist_lb_background.png', r'backgrounds/mage_lb_background.png', r'backgrounds/def_lb_background.png']
-    fonte_arial = "fonts/arialbd.ttf"
+    background_paths = [r'backgrounds/exp_lb_pot.png', r'backgrounds/new_melee_lb_neck.png', r'backgrounds/new_dist_lb_neck.png', r'backgrounds/new_magic_lb_neck.png', r'backgrounds/new_def_lb_neck.png']
+    helvetica = r"fonts/Helvetica.ttf"
+    helvetica_bold = r"fonts/Helvetica-Bold.ttf"
+    teko_medium = r"fonts/Teko-Medium.ttf"
+    tamanho_fonte = 30
+
+    ouro   = (212, 175, 55)
+    prata  = (169, 169, 169)
+    bronze = (205, 127, 50)
+    branco = (255, 255, 255)
+    # azul = (100, 149, 237)
+    # vermelho = (255, 0, 0)
+    # verde = (0, 255, 0)
+    amarelo_ouro = (255, 215, 0)
+    branco = (255, 255, 255)
+    # azul_melee = (68, 187, 255)
+    # laranja_mythic = (240, 160, 0)
+    cores_classes = [(255, 215, 0), (68, 187, 255), (87, 242, 73), (224, 100, 245), (202, 204, 202)]
+
+    # RANK EXPERIÊNCIA
 
     if leaderboard == 0:
         pagina = requests.get(f'https://www.rucoyonline.com/highscores/{rank_names[leaderboard].lower()}/2016/1')
@@ -42,84 +60,102 @@ def show_leaderboard(leaderboard):
         imagens_prontas = []
 
         y = 10
-        
-        fonte = ImageFont.truetype(fonte_arial , 35)
-
-        ouro   = (212, 175, 55)
-        prata  = (169, 169, 169)
-        bronze = (205, 127, 50)
-        branco = (255, 255, 255)
 
         inicio = 0
         fim = 25
 
         for z in range(4):
             desenhando = ImageDraw.Draw(imagens[z])
-            y = 35
+            y = 160
             for a in range (inicio, fim):
                 texto = str(rank[a])
                 if a == 0:
                     cor = ouro
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif a == 1:
                     cor = prata
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif a == 2:
                     cor = bronze
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 else:
                     cor = branco
-                posicao = (900, y)
-                y += 40
+                    fonte = ImageFont.truetype(helvetica , tamanho_fonte)
+                posicao = (720, y)
+                y += 35
                 desenhando.text(posicao, texto, font=fonte, fill=cor)
-            y = 35
+            y = 160
             for b in range (inicio, fim):
                 texto = str(nome[b])
                 if b == 0:
                     cor = ouro
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif b == 1:
                     cor = prata
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif b == 2:
                     cor = bronze
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 else:
                     cor = branco
-                posicao = (1000, y)
-                y += 40
+                    fonte = ImageFont.truetype(helvetica , tamanho_fonte)
+                posicao = (970, y)
+                y += 35
                 desenhando.text(posicao, texto, font=fonte, fill=cor)
-            y = 35
+            y = 160
             for c in range (inicio, fim): #level
                 texto = str(level[c])
                 if c == 0:
                     cor = ouro
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif c == 1:
                     cor = prata
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif c == 2:
                     cor = bronze
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 else:
                     cor = branco
+                    fonte = ImageFont.truetype(helvetica , tamanho_fonte)
                 posicao = (1400, y)  # x, y
-                y += 40
+                y += 35
                 desenhando.text(posicao, texto, font=fonte, fill=cor)
-            y = 35
+            y = 160
             for d in range (inicio, fim): #level
                 texto = str(exp[d])
                 if d == 0:
                     cor = ouro
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif d == 1:
                     cor = prata
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif d == 2:
                     cor = bronze
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 else:
                     cor = branco
-                posicao = (1600, y)  # x, y
-                y += 40
+                    fonte = ImageFont.truetype(helvetica , tamanho_fonte)
+                posicao = (1610, y)  # x, y
+                y += 35
                 desenhando.text(posicao, texto, font=fonte, fill=cor)
-            desenhando.text((35, 50), "Experience Leaderboard", font=ImageFont.truetype(fonte_arial, 70), fill=branco)
-            desenhando.text((35, 1000), f"Generated at {agora}", font=ImageFont.truetype(fonte_arial, 35), fill=branco)
+            desenhando.text((720, 35), f"Rank", font=ImageFont.truetype(teko_medium, 80), fill=cores_classes[leaderboard])
+            desenhando.text((975, 35), f"Name", font=ImageFont.truetype(teko_medium, 80), fill=cores_classes[leaderboard])
+            desenhando.text((1365, 35), f"Level", font=ImageFont.truetype(teko_medium, 80), fill=cores_classes[leaderboard])
+            desenhando.text((1585, 35), f"Experience", font=ImageFont.truetype(teko_medium, 80), fill=cores_classes[leaderboard])
+            
+            desenhando.text((35, 70), "Experience Leaderboard", font=ImageFont.truetype(teko_medium, 80), fill=amarelo_ouro)
+            desenhando.text((35, 1000), f"Generated at {agora}", font=ImageFont.truetype(helvetica, 35), fill=branco)
             inicio += 25
             fim += 25
+            # imagens[z].show()
             buffer = BytesIO()
             imagens[z].save(buffer, format="PNG")
             buffer.seek(0)
             imagens_prontas.append(buffer)
         return imagens_prontas
+    
+    # RANKS SEM SER O DE EXP
+    
     else:
         pagina = requests.get(f'https://www.rucoyonline.com/highscores/{rank_names[leaderboard].lower()}/2016/1')
         dados_pagina = BeautifulSoup(pagina.text, 'html.parser')
@@ -151,67 +187,74 @@ def show_leaderboard(leaderboard):
         imagens_prontas = []
 
         y = 10
-        
-        fonte = ImageFont.truetype(fonte_arial , 35)
-
-        ouro   = (212, 175, 55)
-        prata  = (169, 169, 169)
-        bronze = (205, 127, 50)
-        branco = (255, 255, 255)
 
         inicio = 0
         fim = 25
-        # desenho.text((35, 50), "Mage Leaderboard", font=ImageFont.truetype("arialbd.ttf", 70), fill=branco)
-        # desenho.text((35, 1000), f"Generated at {now}", font=ImageFont.truetype("arialbd.ttf", 35), fill=branco)
-
+        
         for z in range(4):
             desenhando = ImageDraw.Draw(imagens[z])
-            y = 35
+            y = 160
             for a in range (inicio, fim):
                 texto = str(rank[a])
                 if a == 0:
                     cor = ouro
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif a == 1:
                     cor = prata
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif a == 2:
                     cor = bronze
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 else:
                     cor = branco
-                posicao = (900, y)
-                y += 40
+                    fonte = ImageFont.truetype(helvetica , tamanho_fonte)
+                posicao = (970, y)
+                y += 35
                 desenhando.text(posicao, texto, font=fonte, fill=cor)
-            y = 35
+            y = 160
             for b in range (inicio, fim):
                 texto = str(nome[b])
                 if b == 0:
                     cor = ouro
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif b == 1:
                     cor = prata
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif b == 2:
                     cor = bronze
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 else:
                     cor = branco
+                    fonte = ImageFont.truetype(helvetica , tamanho_fonte)
                 posicao = (1200, y)
-                y += 40
+                y += 35
                 desenhando.text(posicao, texto, font=fonte, fill=cor)
-            y = 35
+            y = 160
             for c in range (inicio, fim): #level
                 texto = str(stat[c])
                 if c == 0:
                     cor = ouro
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif c == 1:
                     cor = prata
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 elif c == 2:
                     cor = bronze
+                    fonte = ImageFont.truetype(helvetica_bold , tamanho_fonte)
                 else:
                     cor = branco
+                    fonte = ImageFont.truetype(helvetica , tamanho_fonte)
                 posicao = (1800, y)  # x, y
-                y += 40
+                y += 35
                 desenhando.text(posicao, texto, font=fonte, fill=cor)
-            desenhando.text((35, 50), f"{rank_names[leaderboard]} Leaderboard", font=ImageFont.truetype(fonte_arial, 70), fill=branco)
-            desenhando.text((35, 1000), f"Generated at {agora}", font=ImageFont.truetype(fonte_arial, 35), fill=branco)
+            desenhando.text((970, 35), f"Rank", font=ImageFont.truetype(teko_medium, 80), fill=cores_classes[leaderboard])
+            desenhando.text((1200, 35), f"Name", font=ImageFont.truetype(teko_medium, 80), fill=cores_classes[leaderboard])
+            desenhando.text((1770, 35), f"Stat", font=ImageFont.truetype(teko_medium, 80), fill=cores_classes[leaderboard])
+            desenhando.text((35, 70), f"{rank_names[leaderboard]} Leaderboard", font=ImageFont.truetype(teko_medium, 100), fill=cores_classes[leaderboard])
+            desenhando.text((35, 1000), f"Generated at {agora}", font=ImageFont.truetype(helvetica, 25), fill=branco)
             inicio += 25
             fim += 25
+            # imagens[z].show()
             buffer = BytesIO()
             imagens[z].save(buffer, format="PNG")
             buffer.seek(0)
