@@ -6,7 +6,7 @@ def show_leaderboard(leaderboard):
     from datetime import datetime
 
     rank_names = ['Experience', 'Melee', 'Distance', 'Magic', 'Defense']
-    background_paths = [r'backgrounds/exp_lb_pot.png', r'backgrounds/new_melee_lb_neck.png', r'backgrounds/new_dist_lb_neck.png', r'backgrounds/new_magic_lb_neck.png', r'backgrounds/new_def_lb_neck.png']
+    background_paths = [r'backgrounds/demon_background_exp_swift.png', r'backgrounds/mino_background_melee_neck.png', r'backgrounds/mino_background_dist_neck.png', r'backgrounds/mino_background_mage_neck.png', r'backgrounds/mino_background_def_neck.png']
     helvetica = r"fonts/Helvetica.ttf"
     helvetica_bold = r"fonts/Helvetica-Bold.ttf"
     teko_medium = r"fonts/Teko-Medium.ttf"
@@ -16,13 +16,13 @@ def show_leaderboard(leaderboard):
     prata  = (169, 169, 169)
     bronze = (205, 127, 50)
     branco = (255, 255, 255)
-    # azul = (100, 149, 237)
-    # vermelho = (255, 0, 0)
-    # verde = (0, 255, 0)
+    azul = (100, 149, 237)
+    vermelho = (255, 0, 0)
+    verde = (0, 255, 0)
     amarelo_ouro = (255, 215, 0)
     branco = (255, 255, 255)
-    # azul_melee = (68, 187, 255)
-    # laranja_mythic = (240, 160, 0)
+    azul_melee = (68, 187, 255)
+    laranja_mythic = (240, 160, 0)
     cores_classes = [(255, 215, 0), (68, 187, 255), (87, 242, 73), (224, 100, 245), (202, 204, 202)]
 
     # RANK EXPERIÊNCIA
@@ -260,3 +260,4 @@ def show_leaderboard(leaderboard):
             buffer.seek(0)
             imagens_prontas.append(buffer)
         return imagens_prontas
+# show_leaderboard(0)

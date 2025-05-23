@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import scrapping
-# import calculations
+import calculations
 from discord import app_commands
 from discord.ext import commands
 
@@ -36,30 +36,42 @@ async def showleaderboard(interact:discord.Interaction, leaderboard: app_command
     await interact.followup.send(file=file3)
     await interact.followup.send(file=file4)
 
-# @bot.tree.command(name="stat-calculator-ptraining", description="Calculates useful information about leveling up your stats.")
-# @app_commands.describe(initial_stat="Current stat")
-# @app_commands.describe(final_stat="Final stat")
-# @app_commands.describe(tickrate="Stat XP/h")
-# async def stat_calculator_ptraining(interact:discord.Interaction,initial_stat:app_commands.Range[int, 55, 999], final_stat:app_commands.Range[int, 56, 1000], tickrate:app_commands.Range[(int, 3600, 14400)]):
-#     if final_stat <= initial_stat:
-#         await interact.response.send_message("Final stat must be higher than initial stat.", ephemeral=True)
-#     else:
-#         result_calculation = calculations.stat_calculation(1, initial_stat, final_stat, tickrate)
-#         file1 = discord.File(fp=result_calculation, filename="calculation.png")
-#         await interact.response.send_message(file=file1)
+@bot.tree.command(name="stat-calculator-ptraining", description="Calculates useful information about leveling up your stats.")
+@app_commands.describe(initial_stat="Current stat")
+@app_commands.describe(final_stat="Final stat")
+@app_commands.describe(tickrate="Stat XP/h")
+async def stat_calculator_ptraining(interact:discord.Interaction,initial_stat:app_commands.Range[int, 55, 999], final_stat:app_commands.Range[int, 56, 1000], tickrate:app_commands.Range[(int, 3600, 14400)]):
+    if final_stat <= initial_stat:
+        await interact.response.send_message("Final stat must be higher than initial stat.", ephemeral=True)
+    else:
+        result_calculation = calculations.stat_calculation(initial_stat, final_stat, tickrate)
+        file1 = discord.File(fp=result_calculation, filename="calculation.png")
+        await interact.response.send_message(file=file1)
+
+
+@bot.tree.command(name="level-calculator", description="Calculates useful information about leveling up your base.")
+@app_commands.describe(initial_level="Current stat")
+@app_commands.describe(final_level="Final stat")
+async def stat_calculator_ptraining(interact:discord.Interaction, initial_level:app_commands.Range[int, 1, 998], final_level:app_commands.Range[int, 2, 999]):
+    if final_level <= initial_level:
+        await interact.response.send_message("Final level must be higher than initial level.", ephemeral=True)
+    else:
+        result_calculation = calculations.level_calculation(initial_level, final_level)
+        file1 = discord.File(fp=result_calculation, filename="calculation.png")
+        await interact.response.send_message(file=file1)
 
 # @bot.tree.command(name="stat-calculator-training", description="Calculates useful information about leveling up your stats.")
 # @app_commands.describe(initial_stat="Current stat")
 # @app_commands.describe(final_stat="Final stat")
 # @app_commands.describe(tickrate="Stat XP/h")
 
-# async def stat_calculator_training(interact:discord.Interaction,initial_stat:app_commands.Range[int, 55, 999], final_stat:app_commands.Range[int, 56, 1000], tickrate:app_commands.Range[(int, 1, 3600)]):
-#     if final_stat <= initial_stat:
-#         await interact.response.send_message("Final stat must be higher than initial stat.", ephemeral=True)
-#     else:
-#         result_calculation = calculations.stat_calculation(0, initial_stat, final_stat, tickrate)
-#         file1 = discord.File(fp=result_calculation, filename="calculation.png")
-#         await interact.response.send_message(file=file1)
+async def stat_calculator_training(interact:discord.Interaction,initial_stat:app_commands.Range[int, 100, 999], final_stat:app_commands.Range[int, 99, 1000], tickrate:app_commands.Range[(int, 1, 3600)]):
+    if final_stat <= initial_stat:
+        await interact.response.send_message("Final stat must be higher than initial stat.", ephemeral=True)
+    else:
+        result_calculation = calculations.stat_calculation(0, initial_stat, final_stat, tickrate)
+        file1 = discord.File(fp=result_calculation, filename="calculation.png")
+        await interact.response.send_message(file=file1)
 
 
 
