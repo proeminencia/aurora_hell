@@ -25,15 +25,15 @@ def stat_calculation(skill, skill_final, tickrate):
     azul_mana = (68, 187, 255)
     laranja_mythic = (240, 160, 0)
 
-    imagem = Image.open(r"backgrounds\ptrain_calculator_background.png")
+    imagem = Image.open(r"backgrounds/ptrain_calculator_background.png")
     fonte_arial = r"fonts/arialbd.ttf"
     fonte_fc_bold = r"fonts/FiraCode-Bold.ttf"
-    helvetica = r"fonts\Helvetica.ttf"
-    helvetica_bold = r"fonts\Helvetica-Bold.ttf"
-    teko_medium = r"fonts\Teko-Medium.ttf"
-    teko_bold = r"fonts\Teko-Bold.ttf"
-    teko_regular =r"fonts\Teko-Regular.ttf"
-    teko_light =r"fonts\Teko-Light.ttf"
+    helvetica = r"fonts/Helvetica.ttf"
+    helvetica_bold = r"fonts/Helvetica-Bold.ttf"
+    teko_medium = r"fonts/Teko-Medium.ttf"
+    teko_bold = r"fonts/Teko-Bold.ttf"
+    teko_regular =r"fonts/Teko-Regular.ttf"
+    teko_light =r"fonts/Teko-Light.ttf"
 
     desenhando = ImageDraw.Draw(imagem)
 
@@ -139,15 +139,15 @@ def level_calculation(level, final_level):
     azul_mana = (68, 187, 255)
     laranja_mythic = (240, 160, 0)
 
-    imagem = Image.open(r"backgrounds\experience_calculator_background.png")
+    imagem = Image.open(r"backgrounds/experience_calculator_background.png")
     fonte_arial = r"fonts/arialbd.ttf"
     fonte_fc_bold = r"fonts/FiraCode-Bold.ttf"
-    helvetica = r"fonts\Helvetica.ttf"
-    helvetica_bold = r"fonts\Helvetica-Bold.ttf"
-    teko_medium = r"fonts\Teko-Medium.ttf"
-    teko_bold = r"fonts\Teko-Bold.ttf"
-    teko_regular =r"fonts\Teko-Regular.ttf"
-    teko_light =r"fonts\Teko-Light.ttf"
+    helvetica = r"fonts/Helvetica.ttf"
+    helvetica_bold = r"fonts/Helvetica-Bold.ttf"
+    teko_medium = r"fonts/Teko-Medium.ttf"
+    teko_bold = r"fonts/Teko-Bold.ttf"
+    teko_regular =r"fonts/Teko-Regular.ttf"
+    teko_light =r"fonts/Teko-Light.ttf"
 
     # print(f"from {levels[level]} to {levels[final_level]}")
     # print(f"total mana: {(100+(levels[final_level])*10)}")
