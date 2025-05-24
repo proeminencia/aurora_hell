@@ -6,10 +6,10 @@ def show_leaderboard(leaderboard):
     from datetime import datetime
 
     rank_names = ['Experience', 'Melee', 'Distance', 'Magic', 'Defense']
-    background_paths = [r'backgrounds/demon_background_exp_swift.png', r'backgrounds/mino_background_melee_neck.png', r'backgrounds/mino_background_dist_neck.png', r'backgrounds/mino_background_mage_neck.png', r'backgrounds/mino_background_def_neck.png']
-    helvetica = r"fonts/Helvetica.ttf"
-    helvetica_bold = r"fonts/Helvetica-Bold.ttf"
-    teko_medium = r"fonts/Teko-Medium.ttf"
+    background_paths = [r'backgrounds\demon_background_exp_swift.png', r'backgrounds\mino_background_melee_neck.png', r'backgrounds\mino_background_dist_neck.png', r'backgrounds\mino_background_mage_neck.png', r'backgrounds\mino_background_def_neck.png']
+    helvetica = r"fonts\Helvetica.ttf"
+    helvetica_bold = r"fonts\Helvetica-Bold.ttf"
+    teko_medium = r"fonts\Teko-Medium.ttf"
     tamanho_fonte = 30
 
     ouro   = (212, 175, 55)
