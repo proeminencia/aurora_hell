@@ -73,13 +73,13 @@ def show_members(guildname):
         imagem = Image.open(r"backgrounds/guilds_background.png")
         desenhando = ImageDraw.Draw(imagem)
         desenhando.text((30, 20), f"{default_guildname}", font=ImageFont.truetype(teko_medium, 80))
-        desenhando.text((30, 230), f"List of Members ({len(nome_jogador)})", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))
-        desenhando.text((30, 90), f"{data_criacao}", font=ImageFont.truetype(teko_medium, 80))
+        desenhando.text((30, 90), f"{data_criacao}", font=ImageFont.truetype(teko_medium, 60))
         x_inicial = 30
         for texto, cor in [("Leader ", (61, 204, 212)), (f"{leader}", (255,255,255))]:
-            desenhando.text((x_inicial, 160), texto, font=ImageFont.truetype(teko_medium, 80), fill=cor)
-            largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 80))
+            desenhando.text((x_inicial, 140), texto, font=ImageFont.truetype(teko_medium, 60), fill=cor)
+            largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 60))
             x_inicial += largura
+        desenhando.text((30, 190), f"List of Members ({len(nome_jogador)})", font=ImageFont.truetype(teko_medium, 60), fill=(61, 204, 212))
         desenhando.text((1000, 35), f"Name", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))
         desenhando.text((1362, 35), f"Level", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))
         desenhando.text((1630, 35), f"Join date", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))
@@ -181,9 +181,6 @@ def show_online(guildname):
     teko_medium = r"fonts/Teko-Medium.ttf"
 
     y = 160
-    x1 = 970
-    x2 = 1200
-    x3 = 1800
     tamanho_fonte = 30
     max_por_pagina = 25
     imagens = []
@@ -194,13 +191,13 @@ def show_online(guildname):
         imagem = Image.open(r"backgrounds/guilds_background.png")
         desenhando = ImageDraw.Draw(imagem)
         desenhando.text((30, 20), f"{default_guildname}", font=ImageFont.truetype(teko_medium, 80))
-        desenhando.text((30, 230), f"List of Online Members ({len(nome_jogador)})", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))
-        desenhando.text((30, 90), f"{data_criacao}", font=ImageFont.truetype(teko_medium, 80))
+        desenhando.text((30, 90), f"{data_criacao}", font=ImageFont.truetype(teko_medium, 60))
         x_inicial = 30
         for texto, cor in [("Leader ", (61, 204, 212)), (f"{leader}", (255,255,255))]:
-            desenhando.text((x_inicial, 160), texto, font=ImageFont.truetype(teko_medium, 80), fill=cor)
-            largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 80))
+            desenhando.text((x_inicial, 140), texto, font=ImageFont.truetype(teko_medium, 60), fill=cor)
+            largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 60))
             x_inicial += largura
+        desenhando.text((30, 190), f"List of Online Members ({len(nome_jogador)})", font=ImageFont.truetype(teko_medium, 60), fill=(61, 204, 212))
 
         desenhando.text((1000, 35), f"Name", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))
         desenhando.text((1362, 35), f"Level", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))

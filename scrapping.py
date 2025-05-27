@@ -260,4 +260,4 @@ def show_leaderboard(leaderboard):
             buffer.seek(0)
             imagens_prontas.append(buffer)
         return imagens_prontas
-# show_leaderboard(0)
+# show_leaderboard(1)

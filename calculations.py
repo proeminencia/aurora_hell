@@ -1,8 +1,7 @@
-def stat_calculation(skill, skill_final, tickrate):
+def stat_calculation(skill, skill_final, tickrate, player_class, daily_hours = 0, jewels_per_day = 0, pot_size=1, chest=1):
     from io import BytesIO
     from PIL import Image, ImageDraw, ImageFont
-
-    
+    from datetime import datetime, timedelta
 
     levels_skill = ['55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136', '137', '138', '139', '140', '141', '142', '143', '144', '145', '146', '147', '148', '149', '150', '151', '152', '153', '154', '155', '156', '157', '158', '159', '160', '161', '162', '163', '164', '165', '166', '167', '168', '169', '170', '171', '172', '173', '174', '175', '176', '177', '178', '179', '180', '181', '182', '183', '184', '185', '186', '187', '188', '189', '190', '191', '192', '193', '194', '195', '196', '197', '198', '199', '200', '201', '202', '203', '204', '205', '206', '207', '208', '209', '210', '211', '212', '213', '214', '215', '216', '217', '218', '219', '220', '221', '222', '223', '224', '225', '226', '227', '228', '229', '230', '231', '232', '233', '234', '235', '236', '237', '238', '239', '240', '241', '242', '243', '244', '245', '246', '247', '248', '249', '250', '251', '252', '253', '254', '255', '256', '257', '258', '259', '260', '261', '262', '263', '264', '265', '266', '267', '268', '269', '270', '271', '272', '273', '274', '275', '276', '277', '278', '279', '280', '281', '282', '283', '284', '285', '286', '287', '288', '289', '290', '291', '292', '293', '294', '295', '296', '297', '298', '299', '300', '301', '302', '303', '304', '305', '306', '307', '308', '309', '310', '311', '312', '313', '314', '315', '316', '317', '318', '319', '320', '321', '322', '323', '324', '325', '326', '327', '328', '329', '330', '331', '332', '333', '334', '335', '336', '337', '338', '339', '340', '341', '342', '343', '344', '345', '346', '347', '348', '349', '350', '351', '352', '353', '354', '355', '356', '357', '358', '359', '360', '361', '362', '363', '364', '365', '366', '367', '368', '369', '370', '371', '372', '373', '374', '375', '376', '377', '378', '379', '380', '381', '382', '383', '384', '385', '386', '387', '388', '389', '390', '391', '392', '393', '394', '395', '396', '397', '398', '399', '400', '401', '402', '403', '404', '405', '406', '407', '408', '409', '410', '411', '412', '413', '414', '415', '416', '417', '418', '419', '420', '421', '422', '423', '424', '425', '426', '427', '428', '429', '430', '431', '432', '433', '434', '435', '436', '437', '438', '439', '440', '441', '442', '443', '444', '445', '446', '447', '448', '449', '450', '451', '452', '453', '454', '455', '456', '457', '458', '459', '460', '461', '462', '463', '464', '465', '466', '467', '468', '469', '470', '471', '472', '473', '474', '475', '476', '477', '478', '479', '480', '481', '482', '483', '484', '485', '486', '487', '488', '489', '490', '491', '492', '493', '494', '495', '496', '497', '498', '499', '500', '501', '502', '503', '504', '505', '506', '507', '508', '509', '510', '511', '512', '513', '514', '515', '516', '517', '518', '519', '520', '521', '522', '523', '524', '525', '526', '527', '528', '529', '530', '531', '532', '533', '534', '535', '536', '537', '538', '539', '540', '541', '542', '543', '544', '545', '546', '547', '548', '549', '550', '551', '552', '553', '554', '555', '556', '557', '558', '559', '560', '561', '562', '563', '564', '565', '566', '567', '568', '569', '570', '571', '572', '573', '574', '575', '576', '577', '578', '579', '580', '581', '582', '583', '584', '585', '586', '587', '588', '589', '590', '591', '592', '593', '594', '595', '596', '597', '598', '599', '600', '601', '602', '603', '604', '605', '606', '607', '608', '609', '610', '611', '612', '613', '614', '615', '616', '617', '618', '619', '620', '621', '622', '623', '624', '625', '626', '627', '628', '629', '630', '631', '632', '633', '634', '635', '636', '637', '638', '639', '640', '641', '642', '643', '644', '645', '646', '647', '648', '649', '650', '651', '652', '653', '654', '655', '656', '657', '658', '659', '660', '661', '662', '663', '664', '665', '666', '667', '668', '669', '670', '671', '672', '673', '674', '675', '676', '677', '678', '679', '680', '681', '682', '683', '684', '685', '686', '687', '688', '689', '690', '691', '692', '693', '694', '695', '696', '697', '698', '699', '700', '701', '702', '703', '704', '705', '706', '707', '708', '709', '710', '711', '712', '713', '714', '715', '716', '717', '718', '719', '720', '721', '722', '723', '724', '725', '726', '727', '728', '729', '730', '731', '732', '733', '734', '735', '736', '737', '738', '739', '740', '741', '742', '743', '744', '745', '746', '747', '748', '749', '750', '751', '752', '753', '754', '755', '756', '757', '758', '759', '760', '761', '762', '763', '764', '765', '766', '767', '768', '769', '770', '771', '772', '773', '774', '775', '776', '777', '778', '779', '780', '781', '782', '783', '784', '785', '786', '787', '788', '789', '790', '791', '792', '793', '794', '795', '796', '797', '798', '799', '800', '801', '802', '803', '804', '805', '806', '807', '808', '809', '810', '811', '812', '813', '814', '815', '816', '817', '818', '819', '820', '821', '822', '823', '824', '825', '826', '827', '828', '829', '830', '831', '832', '833', '834', '835', '836', '837', '838', '839', '840', '841', '842', '843', '844', '845', '846', '847', '848', '849', '850', '851', '852', '853', '854', '855', '856', '857', '858', '859', '860', '861', '862', '863', '864', '865', '866', '867', '868', '869', '870', '871', '872', '873', '874', '875', '876', '877', '878', '879', '880', '881', '882', '883', '884', '885', '886', '887', '888', '889', '890', '891', '892', '893', '894', '895', '896', '897', '898', '899', '900', '901', '902', '903', '904', '905', '906', '907', '908', '909', '910', '911', '912', '913', '914', '915', '916', '917', '918', '919', '920', '921', '922', '923', '924', '925', '926', '927', '928', '929', '930', '931', '932', '933', '934', '935', '936', '937', '938', '939', '940', '941', '942', '943', '944', '945', '946', '947', '948', '949', '950', '951', '952', '953', '954', '955', '956', '957', '958', '959', '960', '961', '962', '963', '964', '965', '966', '967', '968', '969', '970', '971', '972', '973', '974', '975', '976', '977', '978', '979', '980', '981', '982', '983', '984', '985', '986', '987', '988', '989', '990', '991', '992', '993', '994', '995', '996', '997', '998', '999', '1000']
 
@@ -14,31 +13,33 @@ def stat_calculation(skill, skill_final, tickrate):
     skill_final -= 55
     exp_necessario_skill = int(total_exp_skills[skill_final]) - int(total_exp_skills[skill])
     horas = int(exp_necessario_skill) / tickrate
-    minutos = (horas - int(horas)) * 60
-    mana_necessaria = (exp_necessario_skill / 4) * 50
+    # minutos = (horas - int(horas)) * 60
+    classes = ["Melee", "Distance", "Mage"]
+    mana_per_spell = 50
+    if classes[player_class] == "Mage":
+        mana_per_spell = 40
+    mana_necessaria = (exp_necessario_skill / 4) * mana_per_spell
 
-    azul = (100, 149, 237)
-    vermelho = (255, 0, 0)
+    if classes[player_class] == "Distance":
+        gold_arrows = (tickrate * horas) * 2
+
+    # azul = (100, 149, 237)
+    # vermelho = (255, 0, 0)
     verde = (0, 255, 0)
     amarelo_ouro = (255, 215, 0)
     branco = (255, 255, 255)
     azul_mana = (68, 187, 255)
     laranja_mythic = (240, 160, 0)
+    colors_classes = [(68, 187, 255), (87, 242, 73), (224, 100, 245)]
 
     imagem = Image.open(r"backgrounds/ptrain_calculator_background.png")
-    fonte_arial = r"fonts/arialbd.ttf"
-    fonte_fc_bold = r"fonts/FiraCode-Bold.ttf"
-    helvetica = r"fonts/Helvetica.ttf"
-    helvetica_bold = r"fonts/Helvetica-Bold.ttf"
     teko_medium = r"fonts/Teko-Medium.ttf"
-    teko_bold = r"fonts/Teko-Bold.ttf"
-    teko_regular =r"fonts/Teko-Regular.ttf"
-    teko_light =r"fonts/Teko-Light.ttf"
 
     desenhando = ImageDraw.Draw(imagem)
 
     desenhando.text((20, 20), f"Power Training", font=ImageFont.truetype(teko_medium, 100), fill=(61, 204, 212))
     desenhando.text((20, 100), f"Calculator", font=ImageFont.truetype(teko_medium, 100),fill=laranja_mythic)
+    desenhando.text((20, 180), f"{classes[player_class]}", font=ImageFont.truetype(teko_medium, 100),fill=colors_classes[player_class])
 
     texto1 = "From stat "
     texto2 = f"{levels_skill[skill]} "
@@ -52,8 +53,6 @@ def stat_calculation(skill, skill_final, tickrate):
         desenhando.text((x_inicial_t, y_inicial_t), texto, font=ImageFont.truetype(teko_medium, 80), fill=color)
         largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 80))
         x_inicial_t += largura
-    # desenhando.text((75, 75), f"Initial stat: {levels[skill]}", font=ImageFont.truetype(teko_medium, 40))
-    # desenhando.text((75, 125), f"Final stat:   {levels[skill_final]}", font=ImageFont.truetype(teko_medium, 40))
 
     t1 = "- You will need "
     t2 = f"{exp_necessario_skill:,} "
@@ -66,11 +65,11 @@ def stat_calculation(skill, skill_final, tickrate):
     for texto, cor in [(t1, branco), (t2, verde), (t3, branco), (t4, laranja_mythic)]:
         desenhando.text((x_inicial_t, y_inicial_t), texto, font=ImageFont.truetype(teko_medium, 50), fill=cor)
         largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 50))
-        x_inicial_t += largura  # move o cursor para a direita
+        x_inicial_t += largura  
 
-    t1 = "- You will need a total of "
-    t2 = f"{int(horas):,} " if minutos == 0 else f"{int(horas):,} hours and {int(minutos):,} minutes "
-    t3 = "to reach stat "
+    t1 = "- You will need "
+    t2 = f"{int(horas):,} hours "
+    t3 = "without bonuses to reach stat "
     t4 = f"{levels_skill[skill_final]}"
 
     x_inicial_t = 575
@@ -78,9 +77,76 @@ def stat_calculation(skill, skill_final, tickrate):
     for t, c in [(t1, branco), (t2, amarelo_ouro), (t3, branco), (t4, laranja_mythic)]:
         desenhando.text((x_inicial_t, y_inicial_t), t, font=ImageFont.truetype(teko_medium, 50), fill=c)
         largura = desenhando.textlength(t, font=ImageFont.truetype(teko_medium, 50))
-        x_inicial_t += largura  # move o cursor para a direita
+        x_inicial_t += largura 
 
 
+
+
+    if daily_hours > 0:
+
+        duration_pots_2x_stat = [0, 1, 2, 4, 8]
+        cost_pots_2x_stat = [0, 10, 16, 28, 48]
+
+
+        if chest == 0:
+            jewels_per_day = jewels_per_day + 10
+
+        elif chest == 1:
+            jewels_per_day = jewels_per_day
+
+        exp_made_with_2x_pots = 0
+
+
+        if jewels_per_day > 0 and pot_size > 0:
+            pots_per_day = jewels_per_day/cost_pots_2x_stat[pot_size]
+            exp_made_with_2x_pots = (pots_per_day * duration_pots_2x_stat[pot_size]) * tickrate
+
+
+        daily_stat_exp = tickrate * daily_hours + exp_made_with_2x_pots
+
+        daily_stat_exp = daily_stat_exp + (tickrate * 2)
+
+        if daily_hours < 16:
+            bonus_exp = ((16 - daily_hours) * 0.1) * tickrate
+            daily_stat_exp += bonus_exp
+
+        off_hours = 24 - daily_hours
+
+        off_train = off_hours * 600
+        
+        total_exp_per_day = off_train + daily_stat_exp
+        
+        days_needed = exp_necessario_skill / total_exp_per_day
+
+        now = datetime.now().replace(microsecond=0)
+        final_day = now + timedelta(days=int(days_needed), hours=((days_needed - int(days_needed)) * 24))
+        final_day = final_day.date()
+
+        text1 = "- Ptraining "
+        text2 = f"{daily_hours} hours" if jewels_per_day > 0 and pot_size > 0 else f"{daily_hours} hours "
+        text3 = ", " if jewels_per_day > 0 and pot_size > 0 else "per day; "
+        text4 = "getting " if jewels_per_day > 0 and pot_size > 0 else ""
+        text5 = f"{jewels_per_day} Bonus Jewels " if jewels_per_day > 0 and pot_size > 0 else ""
+        text6 = f"per day and using " if jewels_per_day > 0 and pot_size > 0 else ""
+        text7 = f"{duration_pots_2x_stat[pot_size]}H 2X Potions" if jewels_per_day > 0 and pot_size > 0 else ""
+        text8 = ";" if jewels_per_day > 0 and pot_size > 0 else ""
+        x = 575
+
+        for texto, cor in [(text1, branco), (text2, amarelo_ouro), (text3, branco), (text4, branco), (text5, verde), (text6, branco), (text7, verde), (text8, branco)]:
+            desenhando.text((x, 250), texto, font=ImageFont.truetype(teko_medium, 50), fill=cor)
+            largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 50))
+            x += largura  
+
+        x = 575
+        t1 = f"- You will reach stat "
+        t2 = f"{levels_skill[skill_final]} "
+        t3 = "in around "
+        t4 = f"{days_needed :.1f} days "
+        t5 = f"(around {final_day})"
+        for texto, cor in [(t1, branco), (t2, laranja_mythic), (t3, branco), (t4, amarelo_ouro), (t5, branco)]:
+            desenhando.text((x, 300), texto, font=ImageFont.truetype(teko_medium, 50), fill=cor)
+            largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 50))
+            x += largura  
     x_inicial_t = 700
     y_inicial_t = 485
     
@@ -104,22 +170,19 @@ def stat_calculation(skill, skill_final, tickrate):
     # y_inicial_a = 375
     y = 575
     for a in range(4):
+        total_gold = int(mana_necessaria/pot_healing[a]) * pot_value[a]
+        if classes[player_class] == "Distance":
+            total_gold += gold_arrows
         desenhando.text((680, y), f"{int(mana_necessaria/pot_healing[a]):,} {name_pots[a]}", font=ImageFont.truetype(teko_medium, 50), fill=azul_mana)
-        desenhando.text((1375, y), f"{int(mana_necessaria/pot_healing[a]) * pot_value[a]:,} gold" , font=ImageFont.truetype(teko_medium, 50), fill=amarelo_ouro)
+        desenhando.text((1375, y), f"{int(total_gold):,} gold" , font=ImageFont.truetype(teko_medium, 50), fill=amarelo_ouro)
         y+= 120
 
-    t1 = f"{int(mana_necessaria/pot_healing[a]):,} "
-    t2 = f"{name_pots[a]}"
-    t3 = ", "
-    t4 = f"{int(mana_necessaria/pot_healing[a]) * pot_value[a]:,} "
-    t5 = f"Gold. "
-
-#     imagem.show()
+    # imagem.show()
     buffer = BytesIO()
     imagem.save(buffer, format="PNG")
     buffer.seek(0)
     return buffer
-# stat_calculation(55, 999, 14400)
+# stat_calculation(370, 600, 14400, 2, 8, jewels_per_day=0, pot_size=4, chest=0)
 
 def level_calculation(level, final_level):
     from io import BytesIO
@@ -131,7 +194,7 @@ def level_calculation(level, final_level):
     level -= 1
     final_level -= 1
 
-    azul = (100, 149, 237)
+    # azul = (100, 149, 237)
     vermelho = (255, 0, 0)
     verde = (0, 255, 0)
     amarelo_ouro = (255, 215, 0)
@@ -140,58 +203,22 @@ def level_calculation(level, final_level):
     laranja_mythic = (240, 160, 0)
 
     imagem = Image.open(r"backgrounds/experience_calculator_background.png")
-    fonte_arial = r"fonts/arialbd.ttf"
-    fonte_fc_bold = r"fonts/FiraCode-Bold.ttf"
-    helvetica = r"fonts/Helvetica.ttf"
-    helvetica_bold = r"fonts/Helvetica-Bold.ttf"
     teko_medium = r"fonts/Teko-Medium.ttf"
-    teko_bold = r"fonts/Teko-Bold.ttf"
-    teko_regular =r"fonts/Teko-Regular.ttf"
-    teko_light =r"fonts/Teko-Light.ttf"
-
-    # print(f"from {levels[level]} to {levels[final_level]}")
-    # print(f"total mana: {(100+(levels[final_level])*10)}")
-    # print(f"total hp: {(100+(levels[final_level])*15)}")
-    # print(f"speed: {300 + (int(final_level / 2.5))}")
 
     exp_necessario_level = exp_levels[final_level] - exp_levels[level] 
-    # print(f"you will need {exp_necessario_level:,} experience to reach {levels[final_level]}")
-    # print(f"{levels[final_level]} total experience = {exp_levels[final_level]:,}")
-    # print(f"exp lost at level {levels[final_level]} : {exp_lost[final_level]:,}")
-
-    # print(f"gold lost for level {levels[final_level]}: \n")
 
     gold = levels[final_level] * 150
     orange =  levels[final_level] * 450
     red = levels[final_level] * 1350
     black = levels[final_level] * 4050
     
-
-    # print(f"gold: {gold:,}")
-    # print(f"orange: {orange:,}")
-    # print(f"red: {red:,}")
-    # print(f"1x black: {black:,}")
-
-    # num_blacks = 10
-    # for a in range (1, 12):
-    #     print(f"{a+1}x blacks: {(black) * (3 ** a) :,}")
-    # print("\n")
-    ## TOTAL CURSED
-
     gold_cursed = gold
     orange_cursed = gold + orange
     red_cursed = gold + orange + red
     black_cursed = gold + orange + red + black
 
-    # print(f"gold: {gold_cursed:,}")
-    # print(f"orange: {orange_cursed:,}")
-    # print(f"red: {red_cursed:,}")
-    # print(f"1x black: {black_cursed:,}")
-
     for a in range (1, 12):
         black_cursed += (black) * (3 ** a)
-        # print(f"{a+1}x blacks: {black_cursed:,}")
-
 
     desenhando = ImageDraw.Draw(imagem)
 
@@ -209,10 +236,6 @@ def level_calculation(level, final_level):
         desenhando.text((x_inicial_t, y_inicial_t), texto, font=ImageFont.truetype(teko_medium, 80), fill=color)
         largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 80))
         x_inicial_t += largura
-        # if texto == "From level ":
-        #     x_inicial_t -= 65
-        # if texto == "to ":
-        #     x_inicial_t -= 25
 
     t1 = "- You will need "
     t2 = f"{exp_necessario_level:,} "
@@ -292,28 +315,22 @@ def level_calculation(level, final_level):
     black_cursed = gold + orange + red + black
     gold_skulls.append(f"1x {black_cursed:,}")
 
-    # print(f"gold: {gold_cursed:,}")
-    # print(f"orange: {orange_cursed:,}")
-    # print(f"red: {red_cursed:,}")
-    # print(f"1x black: {black_cursed:,}")
 
     for a in range (1, 13):
         black_cursed += (black) * (3 ** a)
         gold_skulls.append(f"{a+1}x {black_cursed:,}")
-        # print(f"{a+1}x blacks: {black_cursed:,}")
+
 
     y_inicial_t = 580
     for a in range(8):
         desenhando.text((650, y_inicial_t), str(gold_skulls[a]), font=ImageFont.truetype(teko_medium, 50), fill=amarelo_ouro)
         largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 50))
-            # x_inicial_t += largura  # move o cursor para a direita
         y_inicial_t += 55
 
     y_inicial_t = 580
     for a in range(8, 16):
         desenhando.text((1200, y_inicial_t), str(gold_skulls[a]), font=ImageFont.truetype(teko_medium, 50), fill=amarelo_ouro)
         largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 50))
-            # x_inicial_t += largura  # move o cursor para a direita
         y_inicial_t += 55
 
 #     imagem.show()
