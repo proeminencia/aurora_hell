@@ -125,11 +125,11 @@ async def guild_info(interact:discord.Interaction, guild_name:str, show: app_com
                 file = discord.File(fp=imagem, filename=f"{guild_name}_members_page_{i}.png")
                 await interact.followup.send(file=file)
     
-@bot.tree.command(name="contributors", description="Displays the list of players who have contributed to this project.")
+@bot.tree.command(name="about", description="Displays some information about the project and the list of contributors.")
 async def contributors(interact: discord.Interaction):
     await interact.response.defer()
     contribution_list = contributions.contributions_list()
-    file = discord.File(fp=contribution_list, filename="contribution_list.png")
+    file = discord.File(fp=contribution_list, filename="about.png")
     await interact.followup.send(file=file)
 
 
