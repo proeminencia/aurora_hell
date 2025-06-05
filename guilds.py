@@ -1,4 +1,4 @@
-def show_members(guildname):
+def show_members(guildname:str):
     from bs4 import BeautifulSoup
     import requests
     from PIL import Image, ImageDraw, ImageFont
@@ -9,51 +9,50 @@ def show_members(guildname):
     default_guildname = guildname.strip().title()
     guildname = guildname.strip().title().replace(" ", "%20")
 
-    pagina = requests.get(f"https://www.rucoyonline.com/guild/{guildname}")
-    dados_pagina = BeautifulSoup(pagina.text, 'html.parser')
-    tabela_jogadores = dados_pagina.find_all("table", class_="table table-bordered")
-    tabela_data = dados_pagina.find_all("div", class_="guild-box")
-    
+    page = requests.get(f"https://www.rucoyonline.com/guild/{guildname}")
+    page_data = BeautifulSoup(page.text, 'html.parser')
+    player_table = page_data.find_all("table", class_="table table-bordered")
+    guild_data_table = page_data.find_all("div", class_="guild-box")
 
-    if not tabela_jogadores:
+    if not player_table:
         return 0, [] 
 
-    nome_jogador = []
+    player_name = []
     level = []
-    data = []
-    status = []
+    join_date = []
+    status = [] #Offline or Online
     leader = []
-    agora = datetime.now().replace(microsecond=0)
+    today_date = datetime.now().replace(microsecond=0)
 
-    for div in tabela_data:
-        linhas = div.find_all('p') 
-        for linha in linhas:
-            frases_total = linha.find('i')
-            if frases_total:
-                data_criacao = frases_total.get_text(strip=True)
+    for div in guild_data_table:
+        lines = div.find_all('p') 
+        for line in lines:
+            creation_date_string = line.find('i')
+            if creation_date_string:
+                creation_date = creation_date_string.get_text(strip=True)
 
 
-    for div in tabela_jogadores:
-        linhas = div.find_all('tr')[1:]  # Ignora o cabeçalho
+    for div in player_table:
+        lines = div.find_all('tr')[1:]  # Ignora o cabeçalho
     for tag in div.find_all('span', class_='label flat label-primary'):
         tag.decompose()
-    for linha in linhas:
-        colunas = linha.find_all('td')
-        leader.append(colunas[0].get_text(strip=True))
-        for membros in leader:
-            if "(Leader)" in membros:
-                leader_string = str(membros)
-        colunas = linha.find_all('td')
-        if linha.find("span", class_="label flat label-success"):
+    for line in lines:
+        columns = line.find_all('td')
+        leader.append(columns[0].get_text(strip=True))
+        for members in leader:
+            if "(Leader)" in members:
+                leader_string = str(members)
+        columns = line.find_all('td')
+        if line.find("span", class_="label flat label-success"):
             status.append("online")
         else:
             status.append("offline")
-        if len(colunas) >= 1:
-            link = colunas[0].find("a")
+        if len(columns) >= 1:
+            link = columns[0].find("a")
             if link:
-                nome_jogador.append(link.get_text(strip=True))
-                level.append(colunas[1].get_text(strip=True))
-                data.append(colunas[2].get_text(strip=True))
+                player_name.append(link.get_text(strip=True))
+                level.append(columns[1].get_text(strip=True))
+                join_date.append(columns[2].get_text(strip=True))
 
     pos_parentesis = leader_string.find('(')
     leader = leader_string[:pos_parentesis]
@@ -61,56 +60,60 @@ def show_members(guildname):
     helvetica = r"fonts/Helvetica.ttf"
     teko_medium = r"fonts/Teko-Medium.ttf"
 
-    y = 160
-    tamanho_fonte = 30
-    max_por_pagina = 25
-    imagens = []
-    online = Image.open(r"backgrounds/sprites/online.png")
-    offline = Image.open(r"backgrounds/sprites/offline.png")
+    white_color = (255,255,255)
+    cyan_color = (61, 204, 212)
 
-    for a in range(ceil(len(nome_jogador) / max_por_pagina)):
+    final_images = []
+
+    online_icon = Image.open(r"backgrounds/sprites/online.png")
+    offline_icon = Image.open(r"backgrounds/sprites/offline.png")
+
+    for index in range(ceil(len(player_name) / 25)):
         y = 160
-        imagem = Image.open(r"backgrounds/guilds_background.png")
-        desenhando = ImageDraw.Draw(imagem)
-        desenhando.text((30, 20), f"{default_guildname}", font=ImageFont.truetype(teko_medium, 80))
-        desenhando.text((30, 90), f"{data_criacao}", font=ImageFont.truetype(teko_medium, 60))
-        x_inicial = 30
-        for texto, cor in [("Leader ", (61, 204, 212)), (f"{leader}", (255,255,255))]:
-            desenhando.text((x_inicial, 140), texto, font=ImageFont.truetype(teko_medium, 60), fill=cor)
-            largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 60))
-            x_inicial += largura
-        desenhando.text((30, 190), f"List of Members ({len(nome_jogador)})", font=ImageFont.truetype(teko_medium, 60), fill=(61, 204, 212))
-        desenhando.text((1000, 35), f"Name", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))
-        desenhando.text((1362, 35), f"Level", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))
-        desenhando.text((1630, 35), f"Join date", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))
-        desenhando.text((35, 1000), f"Generated at {agora}", font=ImageFont.truetype(helvetica, 25))
-        imagem.paste(online, (35, 950))
-        imagem.paste(offline, (35, 975))
-        desenhando.text((63, 947), f"= Online", font=ImageFont.truetype(helvetica, 25))
-        desenhando.text((63, 972), f"= Offline", font=ImageFont.truetype(helvetica, 25))
+        image = Image.open(r"backgrounds/guilds_background.png")
+        image_modification = ImageDraw.Draw(image)
+        image_modification.text((30, 300), f"{default_guildname}", font=ImageFont.truetype(teko_medium, 80))
+        image_modification.text((30, 370), f"{creation_date}", font=ImageFont.truetype(teko_medium, 60))
+        x = 30
+
+        for text, color in [("Leader ", cyan_color), (f"{leader}", white_color)]:
+            image_modification.text((x , 420), text, font=ImageFont.truetype(teko_medium, 60), fill=color)
+            text_width = image_modification.textlength(text, font=ImageFont.truetype(teko_medium, 60))
+            x += text_width
+
+        image_modification.text((30, 470), f"List of Members ({len(player_name)})", font=ImageFont.truetype(teko_medium, 60), fill=cyan_color)
+        image_modification.text((1000, 35), f"Name", font=ImageFont.truetype(teko_medium, 80), fill=cyan_color)
+        image_modification.text((1362, 35), f"Level", font=ImageFont.truetype(teko_medium, 80), fill=cyan_color)
+        image_modification.text((1630, 35), f"Join date", font=ImageFont.truetype(teko_medium, 80), fill=cyan_color)
+        image_modification.text((35, 1000), f"Generated at {today_date}", font=ImageFont.truetype(helvetica, 25))
+
+        image.paste(online_icon, (35, 950))
+        image.paste(offline_icon, (35, 975))
+
+        image_modification.text((63, 947), f"= Online", font=ImageFont.truetype(helvetica, 25))
+        image_modification.text((63, 972), f"= Offline", font=ImageFont.truetype(helvetica, 25))
         
         
-        # Define o índice inicial e final para esta "página"
-        inicio = a * max_por_pagina
-        fim = min(inicio + max_por_pagina, len(nome_jogador))
+        start = index * 25
+        end = min(start + 25, len(player_name))
         
-        for i in range(inicio, fim):
-            if status[i] == "online":
-                imagem.paste(online, (970, y+3))
+        for index in range(start, end):
+            if status[index] == "online":
+                image.paste(online_icon, (970, y+3))
             else:
-                imagem.paste(offline, (970, y+3))
-            desenhando.text((1000, y), nome_jogador[i], font=ImageFont.truetype(helvetica , tamanho_fonte), fill=(255,255,255))
-            desenhando.text((1400, y), level[i], font=ImageFont.truetype(helvetica , tamanho_fonte), fill=(255,255,255))
-            desenhando.text((1660, y), data[i], font=ImageFont.truetype(helvetica , tamanho_fonte), fill=(255,255,255))
+                image.paste(offline_icon, (970, y+3))
+            image_modification.text((1000, y), player_name[index], font=ImageFont.truetype(helvetica, 30))
+            image_modification.text((1400, y), level[index], font=ImageFont.truetype(helvetica, 30))
+            image_modification.text((1660, y), join_date[index], font=ImageFont.truetype(helvetica, 30))
             y += 35
+
         buffer = BytesIO()
-        imagem.save(buffer, format="PNG")
+        image.save(buffer, format="PNG")
         buffer.seek(0)
-        imagens.append(buffer)
-    return 1, imagens
+        final_images.append(buffer)
+    return 1, final_images
 
-
-def show_online(guildname):
+def show_online(guildname:str):
     from bs4 import BeautifulSoup
     import requests
     from PIL import Image, ImageDraw, ImageFont
@@ -121,104 +124,96 @@ def show_online(guildname):
     default_guildname = guildname.strip().title()
     guildname = guildname.strip().title().replace(" ", "%20")
 
-
-    pagina = requests.get(f"https://www.rucoyonline.com/guild/{guildname}")
-    dados_pagina = BeautifulSoup(pagina.text, 'html.parser')
-    tabela_jogadores = dados_pagina.find_all("table", class_="table table-bordered")
-    tabela_data = dados_pagina.find_all("div", class_="guild-box")
+    page = requests.get(f"https://www.rucoyonline.com/guild/{guildname}")
+    page_data = BeautifulSoup(page.text, 'html.parser')
+    player_table = page_data.find_all("table", class_="table table-bordered")
+    guild_data_table = page_data.find_all("div", class_="guild-box")
     
 
-    if not tabela_jogadores:
+    if not player_table:
         return 0, [] 
 
-    nome_jogador = []
+    player_name = []
     level = []
-    data = []
+    join_date = []
     leader = []
-    agora = datetime.now().replace(microsecond=0)
+    today_date = datetime.now().replace(microsecond=0)
 
-    for div in tabela_data:
-        linhas = div.find_all('p') 
-        for linha in linhas:
-            frases_total = linha.find('i')
-            if frases_total:
-                data_criacao = frases_total.get_text(strip=True)
+    for div in guild_data_table:
+        lines = div.find_all('p') 
+        for line in lines:
+            creation_date_string = line.find('i')
+            if creation_date_string:
+                creation_date = creation_date_string.get_text(strip=True)
 
-    for div in tabela_jogadores:
-        linhas = div.find_all('tr')[1:]  # Ignora o cabeçalho
+    for div in player_table:
+        lines = div.find_all('tr')[1:]  # Ignora o cabeçalho
         for tag in div.find_all('span', class_='label flat label-primary'):
             tag.decompose()
-        for linha in linhas:
-            colunas = linha.find_all('td')
-            leader.append(colunas[0].get_text(strip=True))
-            for membros in leader:
-                if "(Leader)" in membros:
-                    leader_string = str(membros)
-            if linha.find("span", class_="label flat label-success"):  # Somente se estiver online
-                colunas = linha.find_all('td')
-                if len(colunas) >= 1:
-                    link = colunas[0].find("a")
+        for line in lines:
+            columns = line.find_all('td')
+            leader.append(columns[0].get_text(strip=True))
+            for members in leader:
+                if "(Leader)" in members:
+                    leader_string = str(members)
+            if line.find("span", class_="label flat label-success"):  # Somente se estiver online
+                columns = line.find_all('td')
+                if len(columns) >= 1:
+                    link = columns[0].find("a")
                     if link:
-                        nome_jogador.append(link.get_text(strip=True))
-                        level.append(colunas[1].get_text(strip=True))
-                        data.append(colunas[2].get_text(strip=True))
+                        player_name.append(link.get_text(strip=True))
+                        level.append(columns[1].get_text(strip=True))
+                        join_date.append(columns[2].get_text(strip=True))
     
-    pos_parentesis = leader_string.find('(')
-    leader = leader_string[:pos_parentesis]
+    pos_parenthesis = leader_string.find('(')
+    leader = leader_string[:pos_parenthesis]
 
-    if len(nome_jogador) == 0:
+    if len(player_name) == 0:
         return 1, []
-
-    # azul = (100, 149, 237)
-    # vermelho = (255, 0, 0)
-    # verde = (0, 255, 0)
-    # amarelo_ouro = (255, 215, 0)
-    # branco = (255, 255, 255)
-    # azul_mana = (68, 187, 255)
-    # laranja_mythic = (240, 160, 0)
 
     helvetica = r"fonts/Helvetica.ttf"
     teko_medium = r"fonts/Teko-Medium.ttf"
 
-    y = 160
-    tamanho_fonte = 30
-    max_por_pagina = 25
-    imagens = []
-    online = Image.open(r"backgrounds/sprites/online.png").convert("RGBA")
+    white_color = (255,255,255)
+    cyan_color = (61, 204, 212)
 
-    for a in range(ceil(len(nome_jogador) / max_por_pagina)):
+    final_images = []
+    online_icon = Image.open(r"backgrounds/sprites/online.png").convert("RGBA")
+
+    for index in range(ceil(len(player_name) / 25)):
         y = 160
-        imagem = Image.open(r"backgrounds/guilds_background.png")
-        desenhando = ImageDraw.Draw(imagem)
-        desenhando.text((30, 20), f"{default_guildname}", font=ImageFont.truetype(teko_medium, 80))
-        desenhando.text((30, 90), f"{data_criacao}", font=ImageFont.truetype(teko_medium, 60))
-        x_inicial = 30
-        for texto, cor in [("Leader ", (61, 204, 212)), (f"{leader}", (255,255,255))]:
-            desenhando.text((x_inicial, 140), texto, font=ImageFont.truetype(teko_medium, 60), fill=cor)
-            largura = desenhando.textlength(texto, font=ImageFont.truetype(teko_medium, 60))
-            x_inicial += largura
-        desenhando.text((30, 190), f"List of Online Members ({len(nome_jogador)})", font=ImageFont.truetype(teko_medium, 60), fill=(61, 204, 212))
+        image = Image.open(r"backgrounds/guilds_background.png")
+        image_modification = ImageDraw.Draw(image)
+        image_modification.text((30, 300), f"{default_guildname}", font=ImageFont.truetype(teko_medium, 80))
+        image_modification.text((30, 370), f"{creation_date}", font=ImageFont.truetype(teko_medium, 60))
 
-        desenhando.text((1000, 35), f"Name", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))
-        desenhando.text((1362, 35), f"Level", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))
-        desenhando.text((1630, 35), f"Join date", font=ImageFont.truetype(teko_medium, 80), fill=(61, 204, 212))
-        desenhando.text((35, 1000), f"Generated at {agora}", font=ImageFont.truetype(helvetica, 25))
-        imagem.paste(online, (35, 975))
-        desenhando.text((63, 972), f"= Online", font=ImageFont.truetype(helvetica, 25))
+        x = 30
+
+        for text, color in [("Leader ", cyan_color), (f"{leader}", white_color)]:
+            image_modification.text((x, 420), text, font=ImageFont.truetype(teko_medium, 60), fill=color)
+            text_width = image_modification.textlength(text, font=ImageFont.truetype(teko_medium, 60))
+            x += text_width
+        image_modification.text((30, 470), f"List of Online Members ({len(player_name)})", font=ImageFont.truetype(teko_medium, 60), fill=cyan_color)
+
+        image_modification.text((1000, 35), f"Name", font=ImageFont.truetype(teko_medium, 80), fill=cyan_color)
+        image_modification.text((1362, 35), f"Level", font=ImageFont.truetype(teko_medium, 80), fill=cyan_color)
+        image_modification.text((1630, 35), f"Join date", font=ImageFont.truetype(teko_medium, 80), fill=cyan_color)
+        image_modification.text((35, 1000), f"Generated at {today_date}", font=ImageFont.truetype(helvetica, 25))
+        image.paste(online_icon, (35, 975))
+        image_modification.text((63, 972), f"= Online", font=ImageFont.truetype(helvetica, 25))
         
-        # Define o índice inicial e final para esta "página"
-        inicio = a * max_por_pagina
-        fim = min(inicio + max_por_pagina, len(nome_jogador))
+        start = index * 25
+        end = min(start + 25, len(player_name))
         
-        for i in range(inicio, fim):
-            imagem.paste(online, (970, y+3))
-            desenhando.text((1000, y), nome_jogador[i], font=ImageFont.truetype(helvetica , tamanho_fonte), fill=(255,255,255))
-            desenhando.text((1400, y), level[i], font=ImageFont.truetype(helvetica , tamanho_fonte), fill=(255,255,255))
-            desenhando.text((1660, y), data[i], font=ImageFont.truetype(helvetica , tamanho_fonte), fill=(255,255,255))
+        for index in range(start, end):
+            image.paste(online_icon, (970, y+3))
+            image_modification.text((1000, y),player_name[index], font=ImageFont.truetype(helvetica , 30), fill=white_color)
+            image_modification.text((1400, y), level[index], font=ImageFont.truetype(helvetica , 30), fill=white_color)
+            image_modification.text((1660, y), join_date[index], font=ImageFont.truetype(helvetica , 30), fill=white_color)
             y += 35
+
         buffer = BytesIO()
-        imagem.save(buffer, format="PNG")
+        image.save(buffer, format="PNG")
         buffer.seek(0)
-        imagens.append(buffer)
-    return 2, imagens
-    
+        final_images.append(buffer)
+    return 2, final_images

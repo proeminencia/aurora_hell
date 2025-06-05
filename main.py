@@ -3,9 +3,10 @@ from discord import app_commands
 from discord.ext import commands
 from discord.ext import commands
 from typing import Optional
-import scrapping
+import leaderboards
 import calculations
 import guilds
+import contributions
 
 intents = discord.Intents.all()
 bot = commands.Bot(".", intents=intents)
@@ -27,12 +28,11 @@ async def on_ready():
 ])
 async def showleaderboard(interact:discord.Interaction, leaderboard: app_commands.Choice[int]):
     await interact.response.defer()
-    pag1, pag2, pag3, pag4 = scrapping.show_leaderboard(leaderboard.value)
+    pag1, pag2, pag3, pag4 = leaderboards.show_leaderboard(leaderboard.value)
     file1 = discord.File(fp=pag1, filename="rank_page_1.png")
     file2 = discord.File(fp=pag2, filename="rank_page_2.png")
     file3 = discord.File(fp=pag3, filename="rank_page_3.png")
     file4 = discord.File(fp=pag4, filename="rank_page_4.png")
-    await interact.followup.send(content=f"{leaderboard.name} Leaderboard requested by {interact.user}")
     await interact.followup.send(file=file1)
     await interact.followup.send(file=file2)
     await interact.followup.send(file=file3)
@@ -87,8 +87,8 @@ async def stat_calculator_ptraining(
 
 
 @bot.tree.command(name="level-calculator", description="Calculates useful information about leveling up your base.")
-@app_commands.describe(initial_level="Current stat")
-@app_commands.describe(final_level="Final stat")
+@app_commands.describe(initial_level="Current level")
+@app_commands.describe(final_level="Final level")
 async def level_calculator(interact:discord.Interaction, initial_level:app_commands.Range[int, 1, 998], final_level:app_commands.Range[int, 2, 999]):
     if final_level <= initial_level:
         await interact.response.send_message("Final level must be higher than initial level.")
@@ -125,6 +125,13 @@ async def guild_info(interact:discord.Interaction, guild_name:str, show: app_com
                 file = discord.File(fp=imagem, filename=f"{guild_name}_members_page_{i}.png")
                 await interact.followup.send(file=file)
     
+@bot.tree.command(name="contributors", description="Displays the list of players who have contributed to this project.")
+async def contributors(interact: discord.Interaction):
+    await interact.response.defer()
+    contribution_list = contributions.contributions_list()
+    file = discord.File(fp=contribution_list, filename="contribution_list.png")
+    await interact.followup.send(file=file)
+
 
         
 # @bot.tree.command(name="stat-calculator-training", description="Calculates useful information about leveling up your stats.")
